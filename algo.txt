@@ -1,0 +1,47 @@
+Plazza est un simulateur de pizzeria
+Voici un algo simple
+
+I- Core
+Le core dispose de plusieurs variables:
+server
+cook_time
+cook_nbr
+regenerate_time
+kitchens
+requests
+
+II- Server
+    C'est une variable de type Parser
+    Son objectifs est de récupérer la ligne de commande et de retourner un
+    objet de type Command à l'aide de la méthode treat_command().
+    Cette méthode retourne nullptr lorsque la ligne de commande est invalide
+    De plus cette méthode modifie crée des requêtes à partir de la commande et
+    les ajoutes à 
+
+III- cook_time
+    C'est une variable de type int qui représente le coefficient de la période
+    de préparation d'une pizza
+
+IV- cook_nbr
+    C'est une variable de type int qui représente le nombre de cuisiniers par 
+    cuisine
+
+V- kitchens
+    C'est la liste des cuisines. 
+    Une cuisine est un processus qui est créer uniquement lorsqu'il est nécessaire
+    (manque de cuisine ou aucune cuisine libre)
+    Il possède un attribut id qui est le numéro de la cuisine (0, 1, 2 ...)
+    can_allocate(): est une fonction qui retourne true si il est possible de lancer
+    une préparation dans une cuisine ou pas (un cuisinier est libre si son attribut busy est égal à vrai).
+    Launch(): est une fonction qui permet de lancer l'activité d'une cuisine. Elle prend
+    un objet de type Shared* pour accéder à la ressource principale (la salle des requêtes clients)
+    Il est important d'utiliser le mutex (verrou) de l'objet Shared pour contrôler l'accès aux 
+    ressources (requêtes)
+
+    La variable conditionnelle selector permet d'activer un cuisinier au hasard pour qu'il prenne en 
+    charge une requête
+
+VI- Cook
+    Cook représente un cuisinier. Il est lancé au même moment que la cuisine. Par défaut il est mis en 
+    attente . Il est activé par la cuisine et prend une requête , l'a traite et se remet en attente 
+    
